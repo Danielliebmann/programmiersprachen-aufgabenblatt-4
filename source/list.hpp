@@ -26,6 +26,7 @@ Unterschied: Reference - Pointer = Reference kann niemals NULL sein, Pointer sch
 DOPPELT Verkettete Liste: Doubly linked lists can store each of the elements they contain in different and unrelated storage locations. (Kann im vor und rückwärts iteriert werden)
 Sequence = festgelegte Sequenz in der Liste (reihenfolge, Position)
 assertion = um Ausdruck zu evaluieren, Ausdruck darf nicht 0 sein
+*i = pointer auf ein int
 
 COPY Konstruktor:
 Beim kompilieren wird die vom Menschen verständliche Computersprache in Maschinencode umgewandelt. Der Copy-Konstruktor kopiert die Werte eines Objektes,
@@ -174,7 +175,7 @@ public:
   }
 
 //AUFGABE 4.12 - Move- Konstruktor
- //Move-Konstruktor
+ //Move-Konstruktor. Liste 1 und Liste 2 zeigen auf Elemente der Liste. 
   List(List&& listM): 
   m_size {listM.m_size}, 
   m_first {listM.m_first}, 
@@ -186,7 +187,7 @@ public:
     //Somit ist listmove jetzt leer
   }
 
-   //Zuordnung-Operator ordnet die Elemente einer Liste einer anderen zu.
+   //4.11 Zuordnung-Operator ordnet die Elemente einer Liste einer anderen zu.
   List<T>& operator = (List<T> list) { //Copy-Konstrukt by-value umgangen, by-value kopiert Werte in formalen Parameter
     swap(list); //Swap-Element
     return *this; //Destruktor für List aufgerufen(beinhaltet alte *this)
@@ -259,7 +260,7 @@ public:
 
     else if (m_size > 1) {
       assert(m_first != nullptr);
-      delete m_first;
+      delete m_first; //delete zuletzt
       m_first = m_first -> m_next;
       --m_size;
     }
@@ -303,7 +304,7 @@ public:
 
     else if (m_size > 1) {
       assert(m_last != nullptr);
-      delete m_last;
+      delete m_last;//delete zuletzt
       m_last = m_last -> m_prev;
       --m_size;
     }
@@ -329,7 +330,7 @@ public:
   }
 
 //AUFGABE 4.8 - Insert Methode
-  //Von Insert der gegebene Wert and bestimmte Position
+  //being und end sind grenzen (eingefügt). Ende zB nullpointer hinter Last
   void insert(iterator position, T const& value) {
 	
     if (position == begin()) 
