@@ -5,6 +5,20 @@
 #include <cstddef>
 #include <utility>
 
+/*
+Wissenwertes:
+Value_type = T
+operator=/assign - weißt Werte auf den Behälter
+front - Zugriff auf erstes Element /push_front - fügt Element an Anfang
+back - Zugriff auf letztes Element /push_back - fügt Elemente ans Ende
+pop_back - entfernt letztes Element
+pop_front - entfernt erstes Element
+clear - löscht Inhalt
+erase - löscht Elemente
+swap - tauscht Listeninhalte
+reverse - kehrt Reihenfolge der Elemente um
+*/
+
 template <typename T>
 class List;
 
