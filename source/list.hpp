@@ -25,6 +25,10 @@ Unterschied: Reference - Pointer = Reference kann niemals NULL sein, Pointer sch
 <t> = identifier = Identität für Objekt
 DOPPELT Verkettete Liste: Doubly linked lists can store each of the elements they contain in different and unrelated storage locations. (Kann im vor und rückwärts iteriert werden)
 Sequence = festgelegte Sequenz in der Liste (reihenfolge, Position)
+assertion = um Ausdruck zu evaluieren, Ausdruck darf nicht 0 sein
+
+COPY Konstruktor:
+Beim kompilieren wird die vom Menschen verständliche Computersprache in Maschinencode umgewandelt. Der Copy-Konstruktor kopiert die Werte eines Objektes,
 */
 
 //AUFGABE 4.1
@@ -136,7 +140,6 @@ private:
   ListNode<T>* m_node = nullptr;
 };
 
-//AUFGABE 4.7 - Copy Konstruktor
 template <typename T>
 class List {
 //Der Default-Konstruktor
@@ -158,14 +161,15 @@ public:
   m_first {nullptr}, 
   m_last {nullptr} 
   {} 
-
+//AUFGABE 4.7
   //Copy-Konstruktor
  List(List<T> const& listC): 
  m_size {0}, 
  m_first {nullptr}, 
  m_last {nullptr} {
-    for (iterator i = listC.begin(); i != listC.end(); ++i) {
-      push_back(*i);
+    for (iterator i = listC.begin(); i != listC.end(); ++i) 
+    {
+      push_back(*i); //*i input/output iterator
     }
   }
 
@@ -404,7 +408,7 @@ bool operator != (List<T> const& ASize, List<T> const& BSize) {
   
 //Übergebene Liste genommen und reverse angewendet
 template<typename T>
-List<T> reverse (List<T> reverseList) {
+List<T> reverse (List<T> reverseList) { //reverse Methode, reverselist Objekt
   reverseList.reverse();
   return reverseList; 
 //RETURN: Neue Liste mit umgekehrten Elementen
