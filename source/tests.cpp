@@ -122,10 +122,8 @@ TEST_CASE("Liste gelöscht", "[clear4.3]") {
 	list.clear(); 
 	REQUIRE(list.empty());
 }
-//4.4
-TEST_CASE("Pre-Inkrement mit Int", "[PreInkrement4.4]") {
 	
-}
+
 //4.5
 TEST_CASE("should be an empty range after default construction", "[iterators4.5]") {
   List<int> list;

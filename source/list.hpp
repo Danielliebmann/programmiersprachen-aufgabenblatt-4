@@ -17,6 +17,14 @@ clear - löscht Inhalt
 erase - löscht Elemente
 swap - tauscht Listeninhalte
 reverse - kehrt Reihenfolge der Elemente um
+*this = pointer, der Objekt zeigt (Adresse)
+& = reference (Auch Zeiger, aber direkt aufs Objekt)
+const reference (linksbündig, wenn nichts rechts. T const reference x, bezieht sich auf T und ist konstant)
+&& = rechtsbündig + reference
+Unterschied: Reference - Pointer = Reference kann niemals NULL sein, Pointer schon; Reference ist festgelegt auf Objekt, Pointer kann wechseln; reference muss initialisiert werden, Pointer sind dies jederzeit. (Deswegen auch typedef)
+<t> = identifier = Identität für Objekt
+DOPPELT Verkettete Liste: Doubly linked lists can store each of the elements they contain in different and unrelated storage locations. (Kann im vor und rückwärts iteriert werden)
+Sequence = festgelegte Sequenz in der Liste (reihenfolge, Position)
 */
 
 //AUFGABE 4.1
@@ -64,7 +72,7 @@ struct ListIterator
   //Struct macht übergebenen Wert zu seinem Member (pointer operator -> ()const) 
   pointer operator -> () const 
   {
-    return &(m_node -> m_value); //Übergabewert mit einem Zeiger
+    return &(m_node -> m_value); //Übergabewert mit einem Zeiger(reference direkt aufs objekt)
   } 
 
     //Inkrement Operator (auch i++)
@@ -97,7 +105,7 @@ struct ListIterator
     return m_node != x.m_node;
   } 
 
-  Self next() const 
+  Self next() const //nächster Knoten
   {
     if (m_node)
       return ListIterator(m_node -> m_next);
@@ -105,12 +113,12 @@ struct ListIterator
       return ListIterator(nullptr);
   }
 
-  Self prev() const 
+  Self prev() const //vorheriger Knoten
   {
     if (m_node)
       return ListIterator(m_node -> m_prev);
     else
-      return ListIterator(nullptr);
+      return ListIterator(nullptr); //wenn kein Knoten = nullptr für Zeiger
   }
 
 
@@ -153,7 +161,8 @@ public:
 
   //Copy-Konstruktor
  List(List<T> const& listC): 
- m_size {0}, m_first {nullptr}, 
+ m_size {0}, 
+ m_first {nullptr}, 
  m_last {nullptr} {
     for (iterator i = listC.begin(); i != listC.end(); ++i) {
       push_back(*i);
@@ -174,9 +183,9 @@ public:
   }
 
    //Zuordnung-Operator ordnet die Elemente einer Liste einer anderen zu.
-  List<T>& operator = (List<T> list) { //Copy-Konstrukt by-value umgangen
+  List<T>& operator = (List<T> list) { //Copy-Konstrukt by-value umgangen, by-value kopiert Werte in formalen Parameter
     swap(list); //Swap-Element
-    return *this; //Dekstruktor für List aufgerufen(beinhaltet alte *this)
+    return *this; //Destruktor für List aufgerufen(beinhaltet alte *this)
   }
 
  //Vertauscht Inhalte der Listen mit *this
@@ -187,7 +196,7 @@ public:
   }
 
   //Swap Funktion in der Liste
-  //Friend Methoden haben Zugriff auf Elemente anderer Klassen (muss innerhalb der Klasse deklariert werden
+  //Friend Methoden haben Zugriff auf Elemente anderer Klassen (muss innerhalb der Klasse deklariert werden)
   friend void swap(List<T>& l1, List<T>& l2) {
     l1.swap(l2);
   }
@@ -341,7 +350,7 @@ public:
 //AUFGABE 4.9 - Reverse Freie Funktion
    //Kehrt die Sequenz der Liste, die mit der Funktion aufgerufen wird, um.
   void reverse() {
-    List<T> tmp{*this}; //Kopie der Liste erstellt
+    List<T> tmp{*this}; //Kopie der Liste erstellt(tmp), this ist der pointer auf das Objekt
     clear(); //löscht Liste
     for (iterator it = tmp.begin(); it != tmp.end(); ++it) {
       push_front(*it); //iteriert die List tmp und kehr Sequenz der anfänglichen Liste mit push_front um
