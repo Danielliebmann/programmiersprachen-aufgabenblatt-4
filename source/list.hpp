@@ -19,6 +19,7 @@ swap - tauscht Listeninhalte
 reverse - kehrt Reihenfolge der Elemente um
 */
 
+//AUFGABE 4.1
 template <typename T>
 class List;
 
@@ -36,7 +37,10 @@ struct ListNode
 template <typename T>
 struct ListIterator 
 {
+//AB hier AUFGABE 4.4 implementiert
+//Typedef deklariert Objekte, Pointer etc. damit sie intialisierbar und von einem Typ sind
   typedef ListIterator<T> Self;
+
   typedef T value_type; 
   typedef T* pointer; 
   typedef T& reference; 
@@ -101,7 +105,8 @@ struct ListIterator
       return ListIterator(nullptr);
   }
 
-  Self prev() const {
+  Self prev() const 
+  {
     if (m_node)
       return ListIterator(m_node -> m_prev);
     else
@@ -123,6 +128,7 @@ private:
   ListNode<T>* m_node = nullptr;
 };
 
+//AUFGABE 4.7 - Copy Konstruktor
 template <typename T>
 class List {
 //Der Default-Konstruktor
@@ -146,13 +152,15 @@ public:
   {} 
 
   //Copy-Konstruktor
- List(List<T> const& listC): m_size {0}, m_first {nullptr}, m_last {nullptr} {
+ List(List<T> const& listC): 
+ m_size {0}, m_first {nullptr}, 
+ m_last {nullptr} {
     for (iterator i = listC.begin(); i != listC.end(); ++i) {
-      push_back(*i); // protip ;-)
+      push_back(*i);
     }
   }
 
-
+//AUFGABE 4.12 - Move- Konstruktor
  //Move-Konstruktor
   List(List&& listM): 
   m_size {listM.m_size}, 
@@ -178,16 +186,19 @@ public:
       std::swap(m_last, list.m_last);
   }
 
-  //Freie Swap Funktion in der Liste
+  //Swap Funktion in der Liste
+  //Friend Methoden haben Zugriff auf Elemente anderer Klassen (muss innerhalb der Klasse deklariert werden
   friend void swap(List<T>& l1, List<T>& l2) {
     l1.swap(l2);
   }
-
-  //Destruktor 
+  
+  //AUFGABE 4.3 - Destruktor
   ~List() {
     clear(); 
   //Löscht alle Elemente aus der Liste
   }
+
+  //AUFGABE 4.2
   //ist die Liste leer oder nicht? 
   bool empty() const {
     return m_size == 0;
@@ -286,14 +297,14 @@ public:
   }
 
 
-//Alle Elemente der Liste werden entfernt 
+//AUFGABE 4.3 - Clear Funktion
   //Voraussetzung des Destruktors und der clear Funktion
   void clear() {
     while (m_size > 0) {
       pop_front();
     }
   }
-
+//AUFGABE 4.5 - Begin und End
   //Iterator, der auf m-first zeigt
   iterator begin() const {
   	return iterator {m_first};
@@ -304,6 +315,7 @@ public:
   	return iterator {};
   }
 
+//AUFGABE 4.8 - Insert Methode
   //Von Insert der gegebene Wert and bestimmte Position
   void insert(iterator position, T const& value) {
 	
@@ -326,7 +338,7 @@ public:
       ++m_size; 
     }
   }
-
+//AUFGABE 4.9 - Reverse Freie Funktion
    //Kehrt die Sequenz der Liste, die mit der Funktion aufgerufen wird, um.
   void reverse() {
     List<T> tmp{*this}; //Kopie der Liste erstellt
@@ -343,6 +355,7 @@ private:
   ListNode<T>* m_last = nullptr;
 };
 
+//AUFGABE 4.6 - bool operatoren mit xs=ASIZE, ys=BSIZE
 
 //Sind beide Listen gleich?
 template<typename T>
@@ -378,6 +391,7 @@ template<typename T>
 bool operator != (List<T> const& ASize, List<T> const& BSize) {
 	return !(ASize == BSize);
 }
+//AUFGABE 4.9 - Reverse
   
 //Übergebene Liste genommen und reverse angewendet
 template<typename T>

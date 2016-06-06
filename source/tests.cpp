@@ -326,7 +326,7 @@ TEST_CASE("STD::Vektor in STD::Copy", "[stdvector4.10]") {
   REQUIRE(5 == x[4]);
 }
 //4.11
-TEST_CASE("Zuordnung von Membern", "[zuordn4.11]") {
+TEST_CASE("Zuordnungsoperator", "[zuordn4.11]") {
   //SWAP von Membern
   List<int> l1 {}; 
   l1.push_back(1); 
